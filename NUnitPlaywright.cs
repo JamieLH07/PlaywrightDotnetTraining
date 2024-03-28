@@ -2,6 +2,7 @@
 using Microsoft.Playwright.NUnit;
 using NuGet.Frameworks;
 using NUnit.Framework;
+using PlaywrightTrainingProject.Pages;
 
 namespace PlaywrightTrainingProject;
 
@@ -69,4 +70,24 @@ public class NUnitPlaywright : PageTest
 
     }
 
+    [Test]
+    public async Task TestWithPOM()
+    {
+        //Get the page variable using the POM 
+        var page = await Browser.NewPageAsync();
+        var loginPage = new LoginPageUpgraded(page);
+
+
+        //Navigate to the website
+        await page.GotoAsync("https://www.saucedemo.com/");
+
+        
+        //Do the Login using the POM
+        await loginPage.Login(userName: "standard_user", password: "secret_sauce");
+
+        //Check login was succesful
+        var isExist = await loginPage.IsProductTxtExists();
+        Assert.IsTrue(isExist);
+
+    }
 }
