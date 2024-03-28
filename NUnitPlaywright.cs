@@ -12,7 +12,11 @@ public class NUnitPlaywright : PageTest
 
     {
 
-        await Page.GotoAsync("https://www.saucedemo.com/");
+        await Page.GotoAsync("https://www.saucedemo.com/", new PageGotoOptions
+        {
+            //This will be used instead of the auto wait in playwright (This may not be needed as Playwright but the options are there if neede)
+            WaitUntil = WaitUntilState.DOMContentLoaded
+        });
 
 
     }
@@ -20,6 +24,10 @@ public class NUnitPlaywright : PageTest
     [Test]
     public async Task Test1()
     {
+        //You can use this to set the default timeout for the whole test to a new default (In MS)
+        Page.SetDefaultTimeout(5000);
+
+
         //Use this to set the Username locator as a variable and then call the Fill action afterwards (POM) Method
         var userName = Page.Locator("#user-name");
         await userName.FillAsync("standard_user");
@@ -41,7 +49,13 @@ public class NUnitPlaywright : PageTest
         await btnLogin.ClickAsync();
 
         //await Page.ClickAsync("text=Login");
-        await Expect(Page.Locator("text='Products'")).ToBeVisibleAsync();
+
+        //You can edit the default timeout by using the LocatorAssertionsToBeVisable Options and then specificy the new timeout time (In MS) 
+        await Expect(Page.Locator("text='Products'")).ToBeVisibleAsync(new LocatorAssertionsToBeVisibleOptions
+        {
+            Timeout = 5000
+
+        });
 
 
         //Use the Below to take a Snapshot of the page if there are any issues
