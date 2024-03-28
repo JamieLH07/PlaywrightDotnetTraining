@@ -38,7 +38,6 @@ public class NUnitPlaywright : PageTest
 
 
         var btnLogin = Page.Locator("input", new PageLocatorOptions { HasTextString = "Login" });
-
         await btnLogin.ClickAsync();
 
         //await Page.ClickAsync("text=Login");
