@@ -20,10 +20,28 @@ public class NUnitPlaywright : PageTest
     [Test]
     public async Task Test1()
     {
+        //Use this to set the Username locator as a variable and then call the Fill action afterwards (POM) Method
+        var userName = Page.Locator("#user-name");
+        await userName.FillAsync("standard_user");
 
-        await Page.Locator("#user-name").FillAsync("standard_user");
-        await Page.Locator("#password").FillAsync("secret_sauce");
-        await Page.ClickAsync("text=Login");
+
+        //Use this to find and fill the locator in one line of code (The above is better as variable can be reused
+        //await Page.Locator("#user-name").FillAsync("standard_user");
+
+        //Use this to set the Password locator as a variable and then call the Fill action afterwards (POM) Method
+        var passWord = Page.Locator("#password");
+        await passWord.FillAsync("secret_sauce");
+
+
+        //Use this to find and fill the locator in one line of code (The above is better as variable can be reused
+        //await Page.Locator("#password").FillAsync("secret_sauce");
+
+
+        var btnLogin = Page.Locator("input", new PageLocatorOptions { HasTextString = "Login" });
+
+        await btnLogin.ClickAsync();
+
+        //await Page.ClickAsync("text=Login");
         await Expect(Page.Locator("text='Products'")).ToBeVisibleAsync();
 
 
