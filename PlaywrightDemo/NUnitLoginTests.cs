@@ -14,7 +14,7 @@ public class Tests
     }
 
     [Test]
-    public async Task Test1()
+    public async Task LoginTestWithNoPOM()
     {
 
         //Playwright
@@ -48,7 +48,7 @@ public class Tests
     }
 
     [Test]
-    public async Task TestWithPOM()
+    public async Task LoginTestWithPOM()
     {
 
         //Playwright

@@ -6,7 +6,7 @@ using PlaywrightTrainingProject.Pages;
 
 namespace PlaywrightTrainingProject.PlaywrightDemo;
 
-public class NUnitPlaywright : PageTest
+public class NUnitPlaywrightLoginTests : PageTest
 {
     [SetUp]
     public async Task Setup()
@@ -23,7 +23,7 @@ public class NUnitPlaywright : PageTest
     }
 
     [Test]
-    public async Task Test1()
+    public async Task LoginTestWithNoPOM()
     {
         //You can use this to set the default timeout for the whole test to a new default (In MS)
         Page.SetDefaultTimeout(5000);
@@ -71,7 +71,7 @@ public class NUnitPlaywright : PageTest
     }
 
     [Test]
-    public async Task TestWithPOM()
+    public async Task LoginTestWithPOM()
     {
         //Get the page variable using the POM 
         var page = await Browser.NewPageAsync();
