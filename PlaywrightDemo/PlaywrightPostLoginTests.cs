@@ -58,4 +58,51 @@ public class PlaywrightPostLoginTests : PageTest
         Assert.IsTrue(LogoutCheck);
 
     }
+
+    [Test]
+    public async Task LoginAndNavigateToBasket()
+    {
+        //Get the page variable using the POM 
+        var page = await Browser.NewPageAsync();
+        var loginPage = new LoginPageUpgraded(page);
+
+
+        //Navigate to the website
+        await page.GotoAsync("https://www.saucedemo.com/");
+
+
+        //Do the Login using the POM
+        await loginPage.Login(userName: "standard_user", password: "secret_sauce");
+
+        //Check login was succesful
+        var ProductExists = await loginPage.IsProductTxtExists();
+        Assert.IsTrue(ProductExists);
+
+        //Get the page variable using the POM
+        var productPage = new ProductsPage(page);
+
+        //Add all products to the Basket
+        await productPage.AddAllToBasket();
+
+        //Check products have been added
+        var BasketUpdated = await productPage.IsBasketUpdated();
+        Assert.IsTrue(BasketUpdated);
+
+        //Navigate to basket
+        await productPage.NavigatetoBasket();
+
+        //Get the page variable using the POM 
+        var checkoutPage = new CheckoutPage(page);
+
+        //Check navigation to basket
+        await checkoutPage.IsCheckoutPageLoaded();
+
+        //Logout
+        await checkoutPage.Logout();
+
+        //Check Logout Was Successful
+        var LogoutCheck = await checkoutPage.IsLogoutSuccessful();
+        Assert.IsTrue(LogoutCheck);
+
+    }
 }
